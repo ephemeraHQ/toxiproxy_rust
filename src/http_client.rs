@@ -1,4 +1,4 @@
-use reqwest::{blocking::Client, blocking::Response, Url};
+use reqwest::{Client, Response, Url};
 use std::{
     net::{SocketAddr, ToSocketAddrs},
     str::FromStr,
@@ -18,36 +18,44 @@ impl HttpClient {
         }
     }
 
-    pub(crate) fn get(&self, path: &str) -> Result<Response, String> {
+    pub(crate) async fn get(&self, path: &str) -> Result<Response, String> {
         self.client
             .get(self.uri_with_path(path)?)
             .header("Content-Type", "application/json")
             .send()
+            .await
             .map_err(|err| format!("GET error: {}", err))
     }
 
-    pub(crate) fn post(&self, path: &str) -> Result<Response, String> {
+    pub(crate) async fn post(&self, path: &str) -> Result<Response, String> {
         self.client
             .post(self.uri_with_path(path)?)
             .header("Content-Type", "application/json")
             .send()
+            .await
             .map_err(|err| format!("POST error: {}", err))
     }
 
-    pub(crate) fn post_with_data(&self, path: &str, body: String) -> Result<Response, String> {
+    pub(crate) async fn post_with_data(
+        &self,
+        path: &str,
+        body: String,
+    ) -> Result<Response, String> {
         self.client
             .post(self.uri_with_path(path)?)
             .header("Content-Type", "application/json")
             .body(body)
             .send()
+            .await
             .map_err(|err| format!("POST error: {}", err))
     }
 
-    pub(crate) fn delete(&self, path: &str) -> Result<Response, String> {
+    pub(crate) async fn delete(&self, path: &str) -> Result<Response, String> {
         self.client
             .delete(self.uri_with_path(path)?)
             .header("Content-Type", "application/json")
             .send()
+            .await
             .map_err(|err| format!("DELETE error: {}", err))
     }
 
