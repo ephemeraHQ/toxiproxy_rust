@@ -186,6 +186,16 @@ impl Proxy {
         .await
     }
 
+    pub async fn with_peer_reset(&self, stream: String, toxicity: f32) {
+        self.create_toxic(ToxicPack::new(
+            "reset_peer".into(),
+            stream,
+            toxicity,
+            HashMap::new(),
+        ))
+        .await;
+    }
+
     /// Registers a [bandwith] Toxic.
     ///
     /// # Examples
