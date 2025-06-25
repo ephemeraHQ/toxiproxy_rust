@@ -365,7 +365,7 @@ impl Proxy {
         .await
     }
 
-    async fn create_toxic(&self, toxic: ToxicPack) -> &Self {
+    pub async fn create_toxic(&self, toxic: ToxicPack) -> &Self {
         let body = serde_json::to_string(&toxic).expect(ERR_JSON_SERIALIZE);
         let path = format!("proxies/{}/toxics", self.proxy_pack.name);
 

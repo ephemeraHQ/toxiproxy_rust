@@ -18,7 +18,7 @@ pub struct ToxicPack {
 }
 
 impl ToxicPack {
-    pub(crate) fn new(
+    pub fn new(
         r#type: String,
         stream: String,
         toxicity: f32,
